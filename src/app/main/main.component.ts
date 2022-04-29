@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -10,9 +11,13 @@ export class MainComponent implements OnInit {
   products: any[] = [1,2,3];
   //feltölteni a firebases adatokkal :)
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  goToCart(){
+    this.router.navigateByUrl('cart');
   }
 
 }

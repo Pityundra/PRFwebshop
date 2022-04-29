@@ -10,12 +10,14 @@ import { FormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment.prod';
 import { AuthComponent } from './auth/auth.component';
 import { MainComponent } from './main/main.component';
+import { CartComponent } from './cart/cart.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
-    MainComponent
+    MainComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,

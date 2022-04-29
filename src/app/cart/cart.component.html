@@ -1,0 +1,22 @@
+<head>
+  <title>Kisállat Online Szaküzlet</title>
+</head>
+<body>
+  <h1> Kosár </h1>
+  <h1 (click)="goToMain()"> Vissza </h1>
+
+<table *ngFor="let cartElements of cart">
+  <tr>
+    <th>
+      termék név
+    </th>
+    <th>
+      termék ár - össz
+    </th>
+    <th>
+      darabszam
+    </th>
+</table>
+<p>Össz ár</p>
+
+</body>
