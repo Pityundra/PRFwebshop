@@ -1,12 +1,28 @@
-<head>
-  <title>{{ isLogin ? 'Bejelntkezés' : 'Regisztráció' }}</title>
-</head>
+
 <body>
-  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
-    <label for="email">Email:</label>
-    <input type="email" ngModel name="email" required email><br><br>
-    <label for="password">Password:</label>
-    <input type="password"ngModel name="password" required minlength="6"><br><br>
-    <button type="button" color="primary" fill="clear" expand="block" (click)="onSwitchAuthMode()" >Váltás {{ isLogin ? 'Regisztrációra' : 'Bejelntkezésre' }}</button><br><br>
-    <button type="submit" expand="block" [disabled]="!f.valid" >{{ isLogin ? 'Bejelntkezés' : 'Regisztráció' }}</button>
-  </form>
+  <table>
+    <tr>
+      <th colspan="2">
+        <h1 id="title">{{ isLogin ? 'Bejelentkezés' : 'Regisztráció' }}</h1>
+      </th>
+    </tr>
+    <tr>
+      <th id="main_img">
+        <img src="../../assets/auth_image.png" >
+      </th>
+      <th id="container">
+        <div >
+          <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+            <label for="email">Email:</label><br>
+            <input type="email" ngModel name="email" required email><br><br>
+            <label for="password">Password:</label><br>
+            <input type="password"ngModel name="password" required minlength="6"><br><br>
+            <button type="button"  (click)="onSwitchAuthMode()" >Váltás {{ isLogin ? 'Regisztrációra' : 'Bejelntkezésre' }}</button><br><br>
+            <button type="submit"  [disabled]="!f.valid" >{{ isLogin ? 'Bejelntkezés' : 'Regisztráció' }}</button>
+          </form>
+        </div>
+      </th>
+    </tr>
+  </table>
+
+

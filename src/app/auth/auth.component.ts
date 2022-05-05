@@ -26,6 +26,12 @@ export class AuthComponent implements OnInit {
     console.log('email: ', email)
     console.log('j: ', password)
 
+    if (this.isLogin){
+
+    } else{
+
+    }
+
     this.authenticate(email, password);
     form.reset();
   }
@@ -39,5 +45,6 @@ export class AuthComponent implements OnInit {
   onSwitchAuthMode(){
     this.isLogin = !this.isLogin;
  }
+
 
 }

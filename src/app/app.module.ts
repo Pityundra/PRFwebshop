@@ -12,6 +12,8 @@ import { AuthComponent } from './auth/auth.component';
 import { MainComponent } from './main/main.component';
 import { CartComponent } from './cart/cart.component';
 
+import { ProductsService } from './service/products.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +28,7 @@ import { CartComponent } from './cart/cart.component';
     AngularFirestoreModule,
     FormsModule
   ],
-  providers: [],
+  providers: [ProductsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

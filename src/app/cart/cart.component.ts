@@ -1,4 +1,6 @@
+import { Product } from './../models/product';
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,15 +10,27 @@ import { Router } from '@angular/router';
 })
 export class CartComponent implements OnInit {
 
-  cart: any[] = [1,2,3];
+  cart!: any[];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private db: AngularFirestore) { }
 
   ngOnInit(): void {
+    this.cartGet();
+  }
+
+  cartGet(){
+    this.db.collection('cart').valueChanges().subscribe(value =>{
+      console.log(value),
+      this.cart = value;
+    })
   }
 
   goToMain(){
     this.router.navigateByUrl('main');
+  }
+
+  logOut(){
+    this.router.navigateByUrl('');
   }
 
 }

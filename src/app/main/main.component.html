@@ -1,29 +1,63 @@
-<head>
-  <title>Kisállat Online Szaküzlet</title>
-</head>
 <body>
-  <h1>
-    <button (click)="goToCart()">Kosár</button>
-  </h1>
-
-<table *ngFor="let prudoct of products">
+<table id="container">
   <tr>
     <th>
-      termék név
+      <button id="cart" (click)="goToCart()">Kosár</button>
     </th>
     <th>
-      termék ár
+      <h1>Kisállat Online Szaküzlet</h1>
     </th>
-    <th rowspan="2">
-      megrendel
+    <th>
+      <button id="cart" (click)="logOut()">Kijelentkezés</button>
     </th>
   </tr>
   <tr>
-    <th colspan="2">
-      termék leírás
+    <th>
+      <img id="side" src="../../assets/main_1.png">
+    </th>
+    <th id="products_th">
+      <table id="products" *ngFor="let prudoct of products">
+        <tr>
+          <th>
+           Termék név: {{prudoct.name}}
+          </th>
+          <th>
+            termék ára: {{prudoct.price}} ft
+          </th>
+          <th rowspan="2">
+            <button (click)="addToCart(prudoct.name, prudoct.price)" >Megrendel</button>
+          </th>
+        </tr>
+        <tr>
+          <th colspan="2">
+           Leírás: {{prudoct.discription}}
+          </th>
+        </tr>
+      </table>
+      <tr>
+        <th>
+        </th>
+        <th>
+        <div >
+          <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+            <label for="name">Termék név:</label><br>
+            <input ngModel name="name"><br><br>
+            <label for="price">Termék ár:</label><br>
+            <input ngModel name="price" ><br><br>
+            <label for="discription">Termék leírás:</label><br>
+            <input ngModel name="discription" ><br><br>
+            <button type="submit"  [disabled]="!f.valid" >Felvétel</button>
+          </form>
+        </div>
+      </th>
+      <th></th>
+      </tr>
+    </th>
+    <th>
+      <img id="side" src="../../assets/main_2.png">
     </th>
   </tr>
-
 </table>
+
 
 </body>
