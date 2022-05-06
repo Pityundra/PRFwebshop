@@ -38,9 +38,8 @@
         <th>
         </th>
         <th>
-            <div id="addForm" >
-              {{ isAdmin ? '' : '' }}
-              <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+            <div id="addForm" *ngIf="isAdmin">
+              <form #f="ngForm" (ngSubmit)="onSubmit(f)" >
                 <label for="name">Termék név:</label><br>
                 <input ngModel name="name"><br><br>
                 <label for="price">Termék ár:</label><br>

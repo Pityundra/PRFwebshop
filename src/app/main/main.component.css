@@ -69,3 +69,8 @@ input {
   background-color: rgb(230, 176, 73);
 }
 
+#addForm{
+  display: inline;
+
+}
+

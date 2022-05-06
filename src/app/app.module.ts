@@ -16,13 +16,15 @@ import { ProductsService } from './service/products.service';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
     MainComponent,
-    CartComponent
+    CartComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

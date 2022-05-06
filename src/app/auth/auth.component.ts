@@ -42,6 +42,7 @@ export class AuthComponent implements OnInit {
         localStorage.setItem('user', JSON.stringify(this.userData));
         JSON.parse(localStorage.getItem('user')!);
         console.log(localStorage.getItem('user')?.substring(8,36));
+
       } else {
         localStorage.setItem('user', 'null');
         JSON.parse(localStorage.getItem('user')!);
@@ -54,9 +55,6 @@ export class AuthComponent implements OnInit {
     } else{
       this.SignUp(email, password)
     }
-
-    //this.authenticate(email, password);
-
   }
 
 
@@ -89,11 +87,7 @@ export class AuthComponent implements OnInit {
         window.alert(error.message);
       });
   }
-  authenticate(email: string, password: string){
-      //firebase bekötése és magam felkötése
 
-      //this.router.navigateByUrl('main');
-  }
 
   onSwitchAuthMode(){
     this.isLogin = !this.isLogin;

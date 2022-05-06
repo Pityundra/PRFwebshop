@@ -54,12 +54,8 @@ export class CartComponent implements OnInit {
 
   buy(){
     //kitörölni az adatbázist
-    //this.db.collection('cart.'+ localStorage.getItem('user')?.substring(8,36)).doc().delete();
-    this.db.collection('cart.'+ localStorage.getItem('user')?.substring(8,36)).valueChanges().subscribe(value =>{
-      //console.log(value),
-      this.db.collection('cart.'+ localStorage.getItem('user')?.substring(8,36)).doc(value.toString()).delete();
+   // this.db.collection('cart.'+ localStorage.getItem('user')?.substring(8,36)).doc('').delte();
 
-    })
   }
 
 }

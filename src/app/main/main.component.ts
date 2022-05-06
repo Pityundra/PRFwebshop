@@ -17,12 +17,14 @@ export class MainComponent implements OnInit {
   id: any;
   userData: any;
   public isAdmin = false;
+  first = true;
 
 
   constructor(private router: Router, private db: AngularFirestore, public afAuth: AngularFireAuth) { }
 
   ngOnInit(): void {
     this.productsGet();
+    this.adminCheck();
   }
 
 
@@ -34,10 +36,15 @@ export class MainComponent implements OnInit {
     })
   }
 
-  addToCart(productName: string , productPrice: number){
-    //ha már van benne növelni kéne a mennyiségét, ha nincs hozzáadni
+  adminCheck(){
+    if ("admin@admin.hu" == localStorage.getItem('user')?.substring(47,61)){
+      this.isAdmin = true;
+      //window.location.reload();
+    }
+  }
 
-    this.id =   this.db.createId();
+  addToCart(productName: string , productPrice: number){
+    this.id = this.db.createId();
     this.cartNewElement = this.db.collection('cart.' + localStorage.getItem('user')?.substring(8,36)).doc(this.id);
 
     this.cartNewElement.set({
