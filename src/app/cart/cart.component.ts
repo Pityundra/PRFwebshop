@@ -2,6 +2,9 @@ import { Product } from './../models/product';
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { doc, deleteDoc } from "firebase/firestore";
+
 
 @Component({
   selector: 'app-cart',
@@ -11,26 +14,52 @@ import { Router } from '@angular/router';
 export class CartComponent implements OnInit {
 
   cart!: any[];
+  userData: any;
+  allCost = 0;
 
-  constructor(private router: Router, private db: AngularFirestore) { }
+  constructor(private router: Router, private db: AngularFirestore, public afAuth: AngularFireAuth) { }
 
   ngOnInit(): void {
     this.cartGet();
   }
 
   cartGet(){
-    this.db.collection('cart').valueChanges().subscribe(value =>{
-      console.log(value),
+    //console.log(localStorage.getItem('user')?.substring(8,36))
+    this.db.collection('cart.'+ localStorage.getItem('user')?.substring(8,36)).valueChanges().subscribe(value =>{
+      //console.log(value),
       this.cart = value;
+      for (let cartElements of this.cart) {
+       // console.log(cartElements.productPrice)
+        this.allCost += cartElements.productPrice
+       // console.log(this.allCost)
+      }
+
     })
+/**
+ *
+ */
+
   }
 
   goToMain(){
     this.router.navigateByUrl('main');
   }
 
-  logOut(){
-    this.router.navigateByUrl('');
+  logOut() {
+    return this.afAuth.signOut().then(() => {
+      localStorage.removeItem('user');
+      this.router.navigate(['']);
+    });
+  }
+
+  buy(){
+    //kitörölni az adatbázist
+    //this.db.collection('cart.'+ localStorage.getItem('user')?.substring(8,36)).doc().delete();
+    this.db.collection('cart.'+ localStorage.getItem('user')?.substring(8,36)).valueChanges().subscribe(value =>{
+      //console.log(value),
+      this.db.collection('cart.'+ localStorage.getItem('user')?.substring(8,36)).doc(value.toString()).delete();
+
+    })
   }
 
 }

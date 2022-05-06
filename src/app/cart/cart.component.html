@@ -25,13 +25,11 @@
               Termék név:  {{cartElements.productName}}
             </th>
             <th>
-              Termék ár: {{cartElements.productPrice}}
-            </th>
-            <th>
-              Darabszám: {{cartElements.db}}
+              Termék ár/db: {{cartElements.productPrice}}
             </th>
         </table>
-        <p>Össz ár: </p>
+        <p>Össz ár: {{allCost}} Ft</p>
+        <button id="shop" (click)="buy()">Rendelés Leadása</button>
       </th>
       <th>
         <img id="side" src="../../assets/main_2.png">

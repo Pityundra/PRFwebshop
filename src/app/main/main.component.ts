@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-main',
@@ -11,13 +12,14 @@ import { NgForm } from '@angular/forms';
 })
 export class MainComponent implements OnInit {
 
-  products!: any[]; //*ngFor="let prudoct of products"
-  //feltölteni a firebases adatokkal :)
+  products!: any[];
   cartNewElement: any;
   id: any;
+  userData: any;
+  public isAdmin = false;
 
 
-  constructor(private router: Router, private db: AngularFirestore) { }
+  constructor(private router: Router, private db: AngularFirestore, public afAuth: AngularFireAuth) { }
 
   ngOnInit(): void {
     this.productsGet();
@@ -27,20 +29,20 @@ export class MainComponent implements OnInit {
 
   productsGet(){
     this.db.collection('products').valueChanges().subscribe(value =>{
-      console.log(value),
+     // console.log(value),
       this.products = value;
     })
   }
 
   addToCart(productName: string , productPrice: number){
     //ha már van benne növelni kéne a mennyiségét, ha nincs hozzáadni
-    this.id =   this.db.createId(); //user idt kéne ide tenni
-    this.cartNewElement = this.db.collection('cart').doc(this.id);
+
+    this.id =   this.db.createId();
+    this.cartNewElement = this.db.collection('cart.' + localStorage.getItem('user')?.substring(8,36)).doc(this.id);
 
     this.cartNewElement.set({
           productName: productName,
-          productPrice: productPrice,
-          db: 1,
+          productPrice: productPrice
         });
   }
 
@@ -76,9 +78,11 @@ export class MainComponent implements OnInit {
     this.router.navigateByUrl('cart');
   }
 
-  logOut(){
-    //kijelentkezés lekezelése...
-    this.router.navigateByUrl('');
+  logOut() {
+    return this.afAuth.signOut().then(() => {
+      localStorage.removeItem('user');
+      this.router.navigate(['']);
+    });
   }
 
 }

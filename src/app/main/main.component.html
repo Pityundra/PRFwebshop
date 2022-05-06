@@ -38,17 +38,21 @@
         <th>
         </th>
         <th>
-        <div >
-          <form #f="ngForm" (ngSubmit)="onSubmit(f)">
-            <label for="name">Termék név:</label><br>
-            <input ngModel name="name"><br><br>
-            <label for="price">Termék ár:</label><br>
-            <input ngModel name="price" ><br><br>
-            <label for="discription">Termék leírás:</label><br>
-            <input ngModel name="discription" ><br><br>
-            <button type="submit"  [disabled]="!f.valid" >Felvétel</button>
-          </form>
-        </div>
+            <div id="addForm" >
+              {{ isAdmin ? '' : '' }}
+              <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+                <label for="name">Termék név:</label><br>
+                <input ngModel name="name"><br><br>
+                <label for="price">Termék ár:</label><br>
+                <input ngModel name="price" type="number" ><br><br>
+                <label for="discription">Termék leírás:</label><br>
+                <input ngModel name="discription" ><br><br>
+                <button type="submit"  [disabled]="!f.valid" >Felvétel</button>
+              </form>
+
+            </div>
+
+
       </th>
       <th></th>
       </tr>

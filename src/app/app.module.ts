@@ -13,6 +13,9 @@ import { MainComponent } from './main/main.component';
 import { CartComponent } from './cart/cart.component';
 
 import { ProductsService } from './service/products.service';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,9 @@ import { ProductsService } from './service/products.service';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
-    FormsModule
+    FormsModule,
+    AngularFireAuthModule,
+    AngularFireStorageModule
   ],
   providers: [ProductsService],
   bootstrap: [AppComponent]
