@@ -1,9 +1,7 @@
-import { Product } from './../models/product';
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { doc, deleteDoc } from "firebase/firestore";
 
 
 @Component({
@@ -35,9 +33,7 @@ export class CartComponent implements OnInit {
       }
 
     })
-/**
- *
- */
+
 
   }
 
@@ -54,8 +50,14 @@ export class CartComponent implements OnInit {
 
   buy(){
     //kitörölni az adatbázist
-   // this.db.collection('cart.'+ localStorage.getItem('user')?.substring(8,36)).doc('').delte();
-
+    this.db.collection('cart.'+ localStorage.getItem('user')?.substring(8,36)).valueChanges().subscribe(value =>{
+      this.cart = value;
+      for (let cartElements of this.cart) {
+        this.db.collection('cart.'+ localStorage.getItem('user')?.substring(8,36)).doc(cartElements.productName).delete();
+      }
+      this.allCost = 0;
+    })
+    window.location.reload();
   }
 
 }

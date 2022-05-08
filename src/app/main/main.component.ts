@@ -1,4 +1,3 @@
-import { Product } from './../models/product';
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
@@ -18,7 +17,10 @@ export class MainComponent implements OnInit {
   userData: any;
   public isAdmin = false;
   first = true;
-
+  isIn = false;
+  cart!: any[];
+  cartSize = 0;
+  darab!: any;
 
   constructor(private router: Router, private db: AngularFirestore, public afAuth: AngularFireAuth) { }
 
@@ -39,18 +41,51 @@ export class MainComponent implements OnInit {
   adminCheck(){
     if ("admin@admin.hu" == localStorage.getItem('user')?.substring(47,61)){
       this.isAdmin = true;
-      //window.location.reload();
     }
   }
 
   addToCart(productName: string , productPrice: number){
-    this.id = this.db.createId();
-    this.cartNewElement = this.db.collection('cart.' + localStorage.getItem('user')?.substring(8,36)).doc(this.id);
+       this.first=true
+       this.db.collection('cart.'+ localStorage.getItem('user')?.substring(8,36)).valueChanges().subscribe(value =>{
+        this.cart = value;
+        if (this.first){
+        if (this.cart.length == 0){
+            this.cartNewElement = this.db.collection('cart.' + localStorage.getItem('user')?.substring(8,36)).doc(productName);
 
-    this.cartNewElement.set({
-          productName: productName,
-          productPrice: productPrice
-        });
+            this.cartNewElement.set({
+                  productName: productName,
+                  productPrice: productPrice,
+                  productDb: 1,
+                });
+        }
+        for (let cartElements of this.cart) {
+          if (cartElements.productName ==  productName){
+            this.isIn = true
+            this.darab = cartElements.productDb
+          }
+         }
+         if (this.isIn){
+          //console.log(this.darab)
+          this.cartNewElement = this.db.collection('cart.' + localStorage.getItem('user')?.substring(8,36)).doc(productName);
+          this.cartNewElement.set({
+            productName: productName,
+            productPrice: productPrice*this.darab+productPrice,
+            productDb: this.darab+1,
+          });
+        } else{
+          this.cartNewElement = this.db.collection('cart.' + localStorage.getItem('user')?.substring(8,36)).doc(productName);
+
+          this.cartNewElement.set({
+                productName: productName,
+                productPrice: productPrice,
+                productDb: 1,
+              });
+        }
+        this.first = false;
+        }
+
+      });
+      alert(productName + 'sikeresen hozzáadta a kosarához!');
   }
 
   onSubmit(form: NgForm) {
@@ -67,7 +102,7 @@ export class MainComponent implements OnInit {
   }
 
   adminAdd(productName: string , productPrice: number, productDiscription: string){
-    this.id =   this.db.createId();
+    this.id = productName;
     this.cartNewElement = this.db.collection('products').doc(this.id);
 
     this.cartNewElement.set({
@@ -76,10 +111,6 @@ export class MainComponent implements OnInit {
           price: productPrice
         });
   }
-
-
-
-
 
   goToCart(){
     this.router.navigateByUrl('cart');

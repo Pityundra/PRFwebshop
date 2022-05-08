@@ -31,8 +31,8 @@ export class AuthComponent implements OnInit {
     const email = form.value.email;
     const password = form.value.password;
 
-    console.log('email: ', email)
-    console.log('j: ', password)
+    //console.log('email: ', email)
+    //console.log('j: ', password)
 
 
     //elmenti a felhasználó adatait a localStorageba
@@ -60,12 +60,10 @@ export class AuthComponent implements OnInit {
 
 //bejelentkezés
   SignIn(email: string, password: string) {
-    console.log('anyád');
     return this.afAuth
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
         this.ngZone.run(() => {
-          console.log('anyád');
           this.router.navigate(['main']);
         });
         this.SetUserData(result.user);
@@ -79,7 +77,6 @@ export class AuthComponent implements OnInit {
     return this.afAuth
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
-        console.log('anyád');
         this.router.navigate(['main']);
         this.SetUserData(result.user);
       })
@@ -105,6 +102,4 @@ export class AuthComponent implements OnInit {
     merge: true,
   });
 }
-
-
 }
